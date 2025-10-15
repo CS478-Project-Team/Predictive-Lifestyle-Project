@@ -1,0 +1,33 @@
+﻿@model UserInputViewModel
+@{
+    ViewData["Title"] = "Enter Data";
+}
+<h2>Enter Data</h2>
+<form asp-action="Create" method="post">
+    <div>
+        <label asp-for="Col_Num_1"></label>
+        <input asp-for="Col_Num_1" />
+        <span asp-validation-for="Col_Num_1"></span>
+    </div>
+    <div>
+        <label asp-for="Col_Num_2"></label>
+        <input asp-for="Col_Num_2" />
+        <span asp-validation-for="Col_Num_2"></span>
+    </div>
+    <div>
+        <label asp-for="Col_Cat_1"></label>
+        <input asp-for="Col_Cat_1" />
+        <span asp-validation-for="Col_Cat_1"></span>
+    </div>
+    <div>
+        <label asp-for="Col_Cat_2"></label>
+        <input asp-for="Col_Cat_2" />
+        <span asp-validation-for="Col_Cat_2"></span>
+    </div>
+    <button type="submit">Predict</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
