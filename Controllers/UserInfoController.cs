@@ -16,7 +16,7 @@ namespace Predictive_Lifestyle_Project.Controllers
         {
             if (ModelState.IsValid)
             {
-                ViewBag.Message = $"Age: {model.Age}, Weight: {model.Weight}, Height: {model.Height}";
+                ViewBag.Message = $"Sex: {model.Sex}, Age: {model.Age}, Weight: {model.Weight}, Height: {model.Height}";
             }
 
             return View(model);

@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35818.85 d17.13
+VisualStudioVersion = 17.13.35818.85
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Predictive-Lifestyle-Project", "Predictive-Lifestyle-Project.csproj", "{D8A17428-7F8C-42B8-9874-FC6F2B85F404}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Predictive-Lifestyle-Project.Tests", "..\Predictive-Lifestyle-Project.Tests\Predictive-Lifestyle-Project.Tests.csproj", "{9905ED0D-2C56-4E0E-91E3-0EB820C1B284}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{D8A17428-7F8C-42B8-9874-FC6F2B85F404}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8A17428-7F8C-42B8-9874-FC6F2B85F404}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D8A17428-7F8C-42B8-9874-FC6F2B85F404}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9905ED0D-2C56-4E0E-91E3-0EB820C1B284}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9905ED0D-2C56-4E0E-91E3-0EB820C1B284}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9905ED0D-2C56-4E0E-91E3-0EB820C1B284}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9905ED0D-2C56-4E0E-91E3-0EB820C1B284}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
