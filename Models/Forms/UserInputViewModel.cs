@@ -3,19 +3,18 @@
 public sealed class UserInputViewModel
 {
     // Names should match Python config columns
+    [Display(Name = "Category 1")]
+    [Required]
+    public string Col_Cat_1 { get; set; } = "Sex";
+
     [Display(Name = "Numeric 1")]
     [Required]
-    public string Col_Num_1 { get; set; } = "";  // we allow commas; Python coerces
+    public string Col_Num_1 { get; set; } = "Age";
 
     [Display(Name = "Numeric 2")]
     [Required]
-    public string Col_Num_2 { get; set; } = "";
-
-    [Display(Name = "Category 1")]
+    public string Col_Num_2 { get; set; } = "Weight";
+    [Display(Name = "Numeric 3")]
     [Required]
-    public string Col_Cat_1 { get; set; } = "";
-
-    [Display(Name = "Category 2")]
-    [Required]
-    public string Col_Cat_2 { get; set; } = "";
+    public string Col_Num_3 { get; set; } = "Height";
 }

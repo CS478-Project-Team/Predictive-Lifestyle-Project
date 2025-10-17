@@ -19,10 +19,10 @@ namespace Predictive_Lifestyle_Project.Controllers
             // map VM -> Python row
             var row = new Dictionary<string, object?>(StringComparer.OrdinalIgnoreCase)
             {
-                ["col_num_1"] = vm.Col_Num_1,
-                ["col_num_2"] = vm.Col_Num_2,
-                ["col_cat_1"] = vm.Col_Cat_1,
-                ["col_cat_2"] = vm.Col_Cat_2
+                ["Category 1"] = vm.Col_Cat_1,
+                ["Numeric 1"] = vm.Col_Num_1,
+                ["Numeric 2"] = vm.Col_Num_2,
+                ["Numeric 3"] = vm.Col_Num_3,
             };
 
             try
