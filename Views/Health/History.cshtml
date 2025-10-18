@@ -1,0 +1,17 @@
+﻿@model IEnumerable<Predictive_Lifestyle_Project.Models.Prediction>
+<h2>Prediction History</h2>
+<table class="table">
+    <thead><tr><th>Date (UTC)</th><th>Score</th><th>Label</th><th>BMI</th><th></th></tr></thead>
+    <tbody>
+        @foreach (var p in Model)
+        {
+            <tr>
+                <td>@p.CreatedUtc</td>
+                <td>@p.Score</td>
+                <td>@p.Label</td>
+                <td>@p.HealthEntry?.Bmi</td>
+                <td><a asp-action="Result" asp-route-id="@p.Id">view</a></td>
+            </tr>
+        }
+    </tbody>
+</table>

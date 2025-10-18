@@ -1,0 +1,12 @@
+﻿@model Predictive_Lifestyle_Project.Models.Prediction
+<h2>Your Prediction</h2>
+<p><strong>Score:</strong> @Model.Score</p>
+@if (!string.IsNullOrEmpty(Model.Label))
+{
+    <p><strong>Risk:</strong> @Model.Label</p>
+}
+@if (Model.HealthEntry is not null)
+{
+    <p><strong>BMI:</strong> @Model.HealthEntry.Bmi</p>
+}
+<a asp-action="History" class="btn btn-link">History</a>

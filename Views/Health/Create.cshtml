@@ -1,0 +1,51 @@
+﻿@model Predictive_Lifestyle_Project.Models.ViewModels.HealthEntryViewModel
+@{
+    ViewData["Title"] = "Enter Health Metrics";
+}
+
+<h2>@ViewData["Title"]</h2>
+<form asp-action="Create" method="post">
+    <div class="row">
+        <div class="col-md-3">
+            <label asp-for="Age"></label>
+            <input asp-for="Age" class="form-control" />
+            <span asp-validation-for="Age" class="text-danger"></span>
+        </div>
+        <div class="col-md-3">
+            <label asp-for="SexAtBirth"></label>
+            <select asp-for="SexAtBirth" class="form-control">
+                <option value="M">Male</option>
+                <option value="F">Female</option>
+                <option value="O">Other/Unspecified</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label asp-for="HeightCm"></label>
+            <input asp-for="HeightCm" class="form-control" />
+        </div>
+        <div class="col-md-3">
+            <label asp-for="WeightKg"></label>
+            <input asp-for="WeightKg" class="form-control" />
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-md-3"><label asp-for="SystolicBp"></label><input asp-for="SystolicBp" class="form-control" /></div>
+        <div class="col-md-3"><label asp-for="DiastolicBp"></label><input asp-for="DiastolicBp" class="form-control" /></div>
+        <div class="col-md-3"><label asp-for="RestingHr"></label><input asp-for="RestingHr" class="form-control" /></div>
+        <div class="col-md-3"><label asp-for="StepsPerDay"></label><input asp-for="StepsPerDay" class="form-control" /></div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-md-3"><label asp-for="SleepHours"></label><input asp-for="SleepHours" class="form-control" /></div>
+        <div class="col-md-3"><label asp-for="Hdl"></label><input asp-for="Hdl" class="form-control" /></div>
+        <div class="col-md-3"><label asp-for="Ldl"></label><input asp-for="Ldl" class="form-control" /></div>
+        <div class="col-md-3"><label asp-for="A1c"></label><input asp-for="A1c" class="form-control" /></div>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Get Prediction</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

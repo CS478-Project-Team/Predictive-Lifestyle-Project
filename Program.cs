@@ -1,47 +1,54 @@
+using System.Net.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Polly;
 using Polly.Extensions.Http;
 using Predictive_Lifestyle_Project.Data;
-
+using Predictive_Lifestyle_Project.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
     ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(connectionString));
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services
+    .AddDefaultIdentity<IdentityUser>(options =>
+    {
+        // For dev: turn off confirm if you want quicker testing
+        options.SignIn.RequireConfirmedAccount = true;
+    })
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages(); // for Identity UI
 
-// --- PredictionService: bind options + resilient HttpClient ---
 builder.Services.Configure<PredictionServiceOptions>(
     builder.Configuration.GetSection("PredictionService"));
 
 static IAsyncPolicy<HttpResponseMessage> RetryPolicy() =>
     HttpPolicyExtensions
-        .HandleTransientHttpError()      // 5xx, 408, network failures
+        .HandleTransientHttpError()            // 5xx, 408, network failures
         .OrResult(r => (int)r.StatusCode == 429)
-        .WaitAndRetryAsync(3, attempt => TimeSpan.FromMilliseconds(200 * Math.Pow(2, attempt)));
+        .WaitAndRetryAsync(3, attempt =>
+            TimeSpan.FromMilliseconds(200 * Math.Pow(2, attempt))); // 200ms, 400ms, 800ms
 
-builder.Services.AddHttpClient<IPredictApi, PredictApi>((sp, client) =>
-{
-    var opts = sp.GetRequiredService<IOptions<PredictionServiceOptions>>().Value;
-    client.BaseAddress = new Uri(opts.BaseUrl);
-    client.Timeout = TimeSpan.FromSeconds(opts.TimeoutSeconds);
-})
-.AddPolicyHandler(RetryPolicy());   // Polly
+builder.Services
+    .AddHttpClient<IPredictApi, PredictApi>((sp, client) =>
+    {
+        var opts = sp.GetRequiredService<IOptions<PredictionServiceOptions>>().Value;
+        client.BaseAddress = new Uri(opts.BaseUrl);
+        client.Timeout = TimeSpan.FromSeconds(opts.TimeoutSeconds);
+    })
+    .AddPolicyHandler(RetryPolicy());
 
 var app = builder.Build();
 
-// --- Pipeline (your existing code) ---
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
@@ -53,15 +60,19 @@ else
 }
 
 app.UseHttpsRedirection();
-app.UseRouting();
-app.UseAuthorization();
 
+
+app.UseRouting();
+
+
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapStaticAssets();
 
 app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}")
-    .WithStaticAssets();
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}")
+   .WithStaticAssets();
 
 app.MapRazorPages()
    .WithStaticAssets();
