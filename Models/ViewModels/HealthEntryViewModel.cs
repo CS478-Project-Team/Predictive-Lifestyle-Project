@@ -6,9 +6,9 @@ namespace Predictive_Lifestyle_Project.Models.ViewModels
     {
         [Range(18, 100)] public int Age { get; set; }
         [Required, RegularExpression("M|F|O")] public string SexAtBirth { get; set; } = "O";
-        [Range(100, 250)] public decimal HeightCm { get; set; }
-        [Range(30, 300)] public decimal WeightKg { get; set; }
-        [Range(60, 250)] public int? SystolicBp { get; set; }
+        [Range(100, 250)] public decimal HeightIn { get; set; }
+        [Range(30, 300)] public decimal WeightLbs { get; set; }
+        [Range(60, 250)] public int? DailyCal { get; set; }
         [Range(40, 140)] public int? DiastolicBp { get; set; }
         [Range(30, 200)] public int? RestingHr { get; set; }
         public int? StepsPerDay { get; set; }

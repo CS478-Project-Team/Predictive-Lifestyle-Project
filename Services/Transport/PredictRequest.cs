@@ -4,10 +4,10 @@
     {
         public int Age { get; set; }
         public string SexAtBirth { get; set; } = "O";
-        public decimal HeightCm { get; set; }
-        public decimal WeightKg { get; set; }
+        public decimal HeightIn { get; set; }
+        public decimal WeightLbs { get; set; }
         public decimal Bmi { get; set; }
-        public int? SystolicBp { get; set; }
+        public int? DailyCal { get; set; }
         public int? DiastolicBp { get; set; }
         public int? RestingHr { get; set; }
         public int? StepsPerDay { get; set; }

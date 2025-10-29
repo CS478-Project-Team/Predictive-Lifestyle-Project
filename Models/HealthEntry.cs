@@ -17,13 +17,13 @@ namespace Predictive_Lifestyle_Project.Models
         public string SexAtBirth { get; set; } = "O";
 
         [Range(100, 250)]
-        public decimal HeightCm { get; set; }
+        public decimal HeightIn { get; set; }
 
         [Range(30, 300)]
-        public decimal WeightKg { get; set; }
+        public decimal WeightLbs { get; set; }
 
         [Range(60, 250)]
-        public int? SystolicBp { get; set; }
+        public int? DailyCal { get; set; }
 
         [Range(40, 140)]
         public int? DiastolicBp { get; set; }
@@ -42,6 +42,6 @@ namespace Predictive_Lifestyle_Project.Models
         public DateTime CreatedUtc { get; set; } = DateTime.UtcNow;
 
         [NotMapped]
-        public decimal Bmi => Math.Round(WeightKg / (HeightCm / 100m * HeightCm / 100m), 1);
+        public decimal Bmi => Math.Round((WeightLbs * 703m) / (HeightIn * HeightIn), 1);
     }
 }

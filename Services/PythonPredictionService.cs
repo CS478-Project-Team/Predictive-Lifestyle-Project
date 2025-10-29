@@ -22,10 +22,10 @@ namespace Predictive_Lifestyle_Project.Services
             {
                 age = e.Age,
                 sex_at_birth = e.SexAtBirth,
-                height_cm = e.HeightCm,
-                weight_kg = e.WeightKg,
+                height_cm = e.HeightIn,
+                weight_kg = e.WeightLbs,
                 bmi = e.Bmi,
-                sbp = e.SystolicBp,
+                sbp = e.DailyCal,
                 dbp = e.DiastolicBp,
                 rhr = e.RestingHr,
                 steps_per_day = e.StepsPerDay,
