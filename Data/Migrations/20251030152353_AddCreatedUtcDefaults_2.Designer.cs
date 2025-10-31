@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Predictive_Lifestyle_Project.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251030152353_AddCreatedUtcDefaults_2")]
+    partial class AddCreatedUtcDefaults_2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,11 +32,11 @@ namespace Predictive_Lifestyle_Project.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
+                    b.Property<decimal?>("A1c")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<int>("Age")
                         .HasColumnType("int");
-
-                    b.Property<decimal?>("AlcoholicDrinksPerWeek")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("CreatedUtc")
                         .ValueGeneratedOnAdd()
@@ -43,7 +46,16 @@ namespace Predictive_Lifestyle_Project.Data.Migrations
                     b.Property<int?>("DailyCal")
                         .HasColumnType("int");
 
+                    b.Property<int?>("DiastolicBp")
+                        .HasColumnType("int");
+
+                    b.Property<decimal?>("Hdl")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<decimal>("HeightIn")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal?>("Ldl")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int?>("RestingHr")
@@ -56,12 +68,11 @@ namespace Predictive_Lifestyle_Project.Data.Migrations
                     b.Property<decimal?>("SleepHours")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("SmokeOrVape")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int?>("StepsPerDay")
                         .HasColumnType("int");
+
+                    b.Property<decimal?>("Triglycerides")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("UserId")
                         .IsRequired()

@@ -20,20 +20,16 @@ namespace Predictive_Lifestyle_Project.Services
         {
             var payload = new
             {
-                age = e.Age,
-                sex_at_birth = e.SexAtBirth,
-                height_cm = e.HeightIn,
-                weight_kg = e.WeightLbs,
-                bmi = e.Bmi,
-                sbp = e.DailyCal,
-                dbp = e.DiastolicBp,
-                rhr = e.RestingHr,
-                steps_per_day = e.StepsPerDay,
-                sleep_hours = e.SleepHours,
-                hdl = e.Hdl,
-                ldl = e.Ldl,
-                triglycerides = e.Triglycerides,
-                a1c = e.A1c
+                Age = e.Age,
+                SexAtBirth = e.SexAtBirth,
+                HeightIn = e.HeightIn,
+                WeightLbs = e.WeightLbs,
+                DailyCal = e.DailyCal,
+                RestingHr = e.RestingHr,
+                StepsPerDay = e.StepsPerDay,
+                SleepHours = e.SleepHours,
+                AlcoholicDrinksPerWeek = e.AlcoholicDrinksPerWeek,
+                SmokeOrVape = e.SmokeOrVape,
             };
 
             var resp = await _http.PostAsJsonAsync(_route, payload, ct);

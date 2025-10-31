@@ -9,12 +9,11 @@ namespace Predictive_Lifestyle_Project.Models.ViewModels
         [Range(100, 250)] public decimal HeightIn { get; set; }
         [Range(30, 300)] public decimal WeightLbs { get; set; }
         [Range(60, 250)] public int? DailyCal { get; set; }
-        [Range(40, 140)] public int? DiastolicBp { get; set; }
         [Range(30, 200)] public int? RestingHr { get; set; }
+        [Range(1, 200)] public int? AlcoholicDrinksPerWeek { get; set; }
         public int? StepsPerDay { get; set; }
         public decimal? SleepHours { get; set; }
-        public decimal? Hdl { get; set; }
-        public decimal? Ldl { get; set; }
+        [Required, RegularExpression("Y|N")] public string SmokeOrVape { get; set; } = "N";
         public decimal? Triglycerides { get; set; }
         public decimal? A1c { get; set; }
     }
