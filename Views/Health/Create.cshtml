@@ -38,7 +38,7 @@
 
         <div class="col-md-3">
             <label asp-for="DailyCal" class="form-label"></label>
-            <input asp-for="DailyCal" class="form-control" type="number" min="60" max="250" inputmode="numeric" placeholder="kcal/day (avg)" />
+            <input asp-for="DailyCal" class="form-control" type="number" min="60" max="10000" inputmode="numeric" placeholder="kcal/day (avg)" />
             <span asp-validation-for="DailyCal" class="text-danger"></span>
         </div>
 
@@ -50,7 +50,7 @@
 
         <div class="col-md-3">
             <label asp-for="AlcoholicDrinksPerWeek" class="form-label"></label>
-            <input asp-for="AlcoholicDrinksPerWeek" class="form-control" type="number" min="1" max="200" inputmode="numeric" placeholder="drinks/week" />
+            <input asp-for="AlcoholicDrinksPerWeek" class="form-control" type="number" min="0" max="200" inputmode="numeric" placeholder="drinks/week" />
             <span asp-validation-for="AlcoholicDrinksPerWeek" class="text-danger"></span>
         </div>
 
