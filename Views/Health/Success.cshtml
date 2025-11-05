@@ -1,0 +1,13 @@
+﻿@{
+    ViewData["Title"] = "Submission Successful";
+}
+
+<div class="container text-center mt-5">
+    <h2 class="text-success">✅ Data Submitted Successfully!</h2>
+    <p>Your health information has been saved. You can now return to the homepage or enter new data.</p>
+
+    <div class="mt-4">
+        <a asp-controller="Home" asp-action="Index" class="btn btn-primary me-2">🏠 Return to Home</a>
+        <a asp-controller="HealthEntry" asp-action="Create" class="btn btn-outline-secondary">➕ Submit New Entry</a>
+    </div>
+</div>

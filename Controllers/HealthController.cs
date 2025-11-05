@@ -34,9 +34,6 @@ public sealed class HealthController : Controller
     {
         if (!ModelState.IsValid) return View(vm);
 
-        // NOTE: your SleepHours=120 in the screenshot will fail validation (0–24).
-        // If client-side validation is on, the browser will block the post.
-
         var uid = _userManager.GetUserId(User) ?? ANON;
 
         var entry = new HealthEntry
@@ -52,43 +49,52 @@ public sealed class HealthController : Controller
             SleepHours = vm.SleepHours,
             AlcoholicDrinksPerWeek = vm.AlcoholicDrinksPerWeek,
             SmokeOrVape = vm.SmokeOrVape,
-
         };
 
         _db.HealthEntries.Add(entry);
         await _db.SaveChangesAsync(ct);
 
-        var req = new PredictRequest
+        long? predId = null;
+
+        try
         {
-            Age = entry.Age,
-            SexAtBirth = entry.SexAtBirth,
-            HeightIn = entry.HeightIn,
-            WeightLbs = entry.WeightLbs,
-            DailyCal = entry.DailyCal,
-            RestingHr = entry.RestingHr,
-            StepsPerDay = entry.StepsPerDay,
-            SleepHours = entry.SleepHours,
-            AlcoholicDrinksPerWeek = entry.AlcoholicDrinksPerWeek,
-            SmokeOrVape = entry.SmokeOrVape,
+            var req = new PredictRequest
+            {
+                Age = entry.Age,
+                SexAtBirth = entry.SexAtBirth,
+                HeightIn = entry.HeightIn,
+                WeightLbs = entry.WeightLbs,
+                DailyCal = entry.DailyCal,
+                RestingHr = entry.RestingHr,
+                StepsPerDay = entry.StepsPerDay,
+                SleepHours = entry.SleepHours,
+                AlcoholicDrinksPerWeek = entry.AlcoholicDrinksPerWeek,
+                SmokeOrVape = entry.SmokeOrVape,
+            };
 
-        };
+            var result = await _predictApi.PredictAsync(req, ct);
 
-        var result = await _predictApi.PredictAsync(req, ct);
+            var pred = new Prediction
+            {
+                HealthEntryId = entry.Id,
+                UserId = uid,
+                Score = (decimal)result.score,
+                Label = result.label,
+                DetailsJson = result.details_json
+            };
 
-        var pred = new Prediction
+            _db.Predictions.Add(pred);
+            await _db.SaveChangesAsync(ct);
+            predId = pred.Id;
+        }
+        catch
         {
-            HealthEntryId = entry.Id,
-            UserId = uid,
-            Score = (decimal)result.score,
-            Label = result.label,
-            DetailsJson = result.details_json
-        };
+            
+        }
 
-        _db.Predictions.Add(pred);
-        await _db.SaveChangesAsync(ct);
-
-        return RedirectToAction(nameof(Result), new { id = pred.Id });
+        return RedirectToAction(nameof(Success), new { id = predId });
     }
+
 
     [AllowAnonymous]
     [HttpGet("Result/{id:long}")]
@@ -99,6 +105,14 @@ public sealed class HealthController : Controller
                                      .FirstOrDefaultAsync(x => x.Id == id && x.UserId == uid, ct);
         if (p == null) return NotFound();
         return View(p);
+    }
+
+    [AllowAnonymous]
+    [HttpGet("Success/{id:long?}")]
+    public IActionResult Success(long? id)
+    {
+        var vm = new HealthSuccessViewModel { PredictionId = id };
+        return View(vm);
     }
 
     [AllowAnonymous]
