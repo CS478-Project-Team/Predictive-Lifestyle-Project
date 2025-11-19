@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Predictive_Lifestyle_Project</title>
     <script type="importmap"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/main.css" />
@@ -15,28 +16,28 @@
         <div class="branding">
 
             <div class="container position-relative d-flex align-items-center justify-content-between">
-                <a href="index.html" class="logo d-flex align-items-center">
+                <a class="logo d-flex align-items-center nav-link" asp-area="" asp-controller="Home" asp-action="Index">
                     <!-- Uncomment the line below if you also wish to use an image logo -->
                     <!-- <img src="img/logo.webp" alt=""> -->
-                    <h1 class="sitename">Health Predictor<br></h1>
+                    <h1 class="sitename fw-bold">Health Predictor<br></h1>
                 </a>
 
 
                 <nav id="navmenu" class="navmenu d-flex align-items-center justify-content-between">
                     <ul class="d-flex align-items-center mb-0">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Health" asp-action="Create">Health</a>
+                            <a class="nav-link" asp-area="" asp-controller="Health" asp-action="Create">Health</a>
                         </li>
                         @if (User.Identity?.IsAuthenticated ?? false)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Health" asp-action="History">History</a>
+                                <a class="nav-link" asp-area="" asp-controller="Health" asp-action="History">History</a>
                             </li>
                         }
                         <li><a href="about.html">About</a></li>
