@@ -1,8 +1,8 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
-using SendingEmails;
 using Microsoft.AspNetCore.Mvc;
 using Predictive_Lifestyle_Project.Models;
+using Predictive_Lifestyle_Project.Services;
 
 namespace Predictive_Lifestyle_Project.Controllers;
 

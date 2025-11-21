@@ -1,4 +1,4 @@
-namespace SendingEmails
+namespace Predictive_Lifestyle_Project.Services
 {
 	public interface IEmailSender
 	{

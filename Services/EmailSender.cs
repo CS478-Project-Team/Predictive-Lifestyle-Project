@@ -3,7 +3,7 @@ using MailKit.Security;
 using MimeKit;
 using System.Diagnostics;
 
-namespace SendingEmails
+namespace Predictive_Lifestyle_Project.Services
 {
 	public class EmailSender : IEmailSender
 	{
@@ -24,8 +24,8 @@ namespace SendingEmails
 
 				// From address
 				emailMessage.From.Add(new MailboxAddress(
-					"Predictive App",
-					"predictiveapp478@gmail.com"));
+					_configuration["EmailSettings:SenderName"],
+					_configuration["EmailSettings:SenderEmail"]));
 
 				// To address
 				emailMessage.To.Add(new MailboxAddress("", email));
@@ -48,8 +48,8 @@ namespace SendingEmails
 
 					// Authenticate
 					await client.AuthenticateAsync(
-						"predictiveapp478@gmail.com",
-						"bcuc xhsv zfve yafw "); //app password
+                        _configuration["EmailSettings:SenderEmail"],
+						_configuration["EmailSettings:SenderPassword"]); //app password
 
 					// Send message
 					await client.SendAsync(emailMessage);

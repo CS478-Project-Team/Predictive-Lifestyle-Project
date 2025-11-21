@@ -6,7 +6,6 @@ using Polly;
 using Polly.Extensions.Http;
 using Predictive_Lifestyle_Project.Data;
 using Predictive_Lifestyle_Project.Services;
-using SendingEmails;
 
 
 
@@ -22,7 +21,7 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 
 //email sending service
-builder.Services.AddTransient<SendingEmails.IEmailSender, SendingEmails.EmailSender>();
+builder.Services.AddTransient<IEmailSender, EmailSender>();
 
 builder.Services
     .AddDefaultIdentity<IdentityUser>(options =>
