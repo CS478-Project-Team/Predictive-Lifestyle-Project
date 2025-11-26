@@ -1,12 +1,30 @@
-﻿@{
+﻿@model Predictive_Lifestyle_Project.Models.ViewModels.HealthSuccessViewModel
+@{
     ViewData["Title"] = "Submission Successful";
 }
 <div class="container text-center mt-5">
     <h2 class="text-success">✅ Data Submitted Successfully!</h2>
     <p>Your health information has been saved. You can now return to the homepage or enter new data.</p>
 
-    <div class="mt-4">
-        <a asp-controller="Home" asp-action="Index" class="btn btn-primary me-2">🏠 Return to Home</a>
-        <a asp-controller="HealthEntry" asp-action="Create" class="btn btn-outline-secondary">➕ Submit New Entry</a>
+    @if (Model.PredictionId.HasValue)
+    {
+        <a asp-action="Result"
+           asp-controller="Health"
+           asp-route-id="@Model.PredictionId.Value"
+           class="btn btn-primary btn-lg">
+            View Results
+        </a>
+    }
+    else
+    {
+        <p class="text-warning mt-4">
+            We were unable to generate a prediction at this time.
+        </p>
+    }
+
+    <div class="mt-3">
+        <a asp-action="History" asp-controller="Health" class="btn btn-outline-secondary">
+            View Prediction History
+        </a>
     </div>
 </div>
