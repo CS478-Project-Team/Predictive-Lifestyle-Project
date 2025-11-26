@@ -1,25 +1,36 @@
-﻿@model IEnumerable<Predictive_Lifestyle_Project.Models.Prediction>
-<div class="container py-4">
-    <div class="row justify-content-center">
-        <div class="col-12 col-lg-10">
-            <h2>Prediction History</h2>
-            <canvas id="lineChart"></canvas>
-            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-            <table class="table">
-                <thead><tr><th>Date (UTC)</th><th>Score</th><th>Label</th><th>BMI</th><th></th></tr></thead>
-                <tbody>
-                    @foreach (var p in Model)
-                    {
-                        <tr>
-                            <td>@p.CreatedUtc</td>
-                            <td>@p.Score</td>
-                            <td>@p.Label</td>
-                            <td>@p.HealthEntry?.Bmi</td>
-                            <td><a asp-action="Result" asp-route-id="@p.Id">view</a></td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
+﻿@model IReadOnlyList<Predictive_Lifestyle_Project.Models.Prediction>
+
+<h2>Your Prediction History</h2>
+
+@if (!Model.Any())
+{
+    <p>You don't have any saved predictions yet.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Age</th>
+                <th>Label</th>
+                <th>Score</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var p in Model)
+            {
+                <tr>
+                    <td>@p.CreatedUtc.ToLocalTime().ToString("g")</td>
+                    <td>@p.HealthEntry?.Age</td>
+                    <td>@p.Label</td>
+                    <td>@p.Score</td>
+                    <td>
+                        <a asp-action="Result" asp-route-id="@p.Id">View</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
