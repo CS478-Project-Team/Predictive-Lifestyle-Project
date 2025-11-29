@@ -9,6 +9,7 @@ using Predictive_Lifestyle_Project.Services;
 using Predictive_Lifestyle_Project.Services.Transport;
 
 [Route("Health")]
+[Authorize]
 public sealed class HealthController : Controller
 {
     private const string ANON = "ANON";

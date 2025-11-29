@@ -39,3 +39,8 @@ body {
 .btn-accent:hover {
     filter: brightness(0.9);
 }
+
+
+.theme-color {
+    color: var(--accent-color) !important;
+}
