@@ -1,18 +1,293 @@
-﻿@model Predictive_Lifestyle_Project.Models.Prediction
-<div class="container py-4">
-    <div class="row justify-content-center">
-        <div class="col-12 col-lg-10">
-            <h2>Your Prediction</h2>
-            <p><strong>Score:</strong> @Model.Score</p>
-            @if (!string.IsNullOrEmpty(Model.Label))
-            {
-                <p><strong>Risk:</strong> @Model.Label</p>
+﻿
+@model Predictive_Lifestyle_Project.Models.ViewModels.HealthResultViewModel
+
+@if (
+    Model.Input.AlcoholicDrinksPerWeek.HasValue
+    && Model.Input.AlcoholicDrinksPerWeek > 100
+    && (Model.Input.SmokeOrVape?.ToUpper() == "Y"
+        || Model.Input.SmokeOrVape?.ToUpper() == "YES")
+)
+{
+<style>
+    /* Container background for extra drama */
+    .urgent-bg {
+        background: radial-gradient(circle at top, #ffdddd 0, #ffffff 55%);
+        min-height: 100vh;
+    }
+
+    /* Blinking alert bar (top siren-style) */
+    .urgent-alert-bar {
+        border-width: 3px;
+        border-color: #8B0000;
+        font-size: 1.8rem;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        animation: alert-blink 1s infinite;
+    }
+
+    @@keyframes alert-blink {
+        0% {
+            background-color: #dc3545;
+            color: #fff;
+        }
+
+        50% {
+            background-color: #ffc107;
+            color: #000;
+        }
+
+        100% {
+            background-color: #dc3545;
+            color: #fff;
+        }
+    }
+
+    /* Pulsing card for risk level */
+    .urgent-risk-card {
+        border: 3px solid #dc3545;
+        box-shadow: 0 0 20px rgba(220, 53, 69, 0.8);
+        animation: risk-pulse 1.7s infinite;
+    }
+
+    @@keyframes risk-pulse {
+        0% {
+            box-shadow: 0 0 10px rgba(220, 53, 69, 0.6);
+            transform: scale(1);
+        }
+
+        50% {
+            box-shadow: 0 0 28px rgba(220, 53, 69, 1);
+            transform: scale(1.02);
+        }
+
+        100% {
+            box-shadow: 0 0 10px rgba(220, 53, 69, 0.6);
+            transform: scale(1);
+        }
+    }
+
+    /* Animated risk text */
+    .urgent-risk-text {
+        text-transform: uppercase;
+        font-size: 3rem;
+        font-weight: 900;
+        color: #dc3545;
+        animation: risk-text-pulse 1s infinite;
+    }
+
+    @@keyframes risk-text-pulse {
+        0% {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(1.08);
+        }
+
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    /* Slight shake for recommendations card */
+    .urgent-reco-card {
+        border-left: 8px solid #dc3545;
+        animation: card-shake 0.4s ease-in-out infinite alternate;
+    }
+
+    @@keyframes card-shake {
+        0% {
+            transform: translateX(0);
+        }
+
+        100% {
+            transform: translateX(2px);
+        }
+    }
+
+    /* Animated button hover */
+    .urgent-btn-main {
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+        .urgent-btn-main::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, rgba(255,255,255,0.7), transparent);
+            transition: all 0.4s ease;
+        }
+
+        .urgent-btn-main:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0.5rem 1rem rgba(220, 53, 69, 0.5);
+        }
+
+            .urgent-btn-main:hover::after {
+                left: 100%;
             }
-            @if (Model.HealthEntry is not null)
-            {
-                <p><strong>BMI:</strong> @Model.HealthEntry.Bmi</p>
-            }
-            <a asp-action="History" class="btn btn-link">History</a>
+
+    /* Subtle hover for secondary button */
+    .urgent-btn-secondary:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 0.5rem 1rem rgba(108, 117, 125, 0.4);
+    }
+
+    /* Emphasize the suggestions list */
+    .urgent-suggestion-list li::marker {
+        color: #dc3545;
+    }
+
+    /* Grim Reaper styling */
+    .grim-reaper-img {
+        width: 220px;
+        opacity: 0;
+        animation: reaper-fade 3s ease forwards, reaper-bob 3s ease-in-out infinite 3s;
+        filter: drop-shadow(0 0 12px rgba(0,0,0,0.7));
+    }
+
+    @@keyframes reaper-fade {
+        0% {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @@keyframes reaper-bob {
+        0% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-8px);
+        }
+
+        100% {
+            transform: translateY(0);
+        }
+    }
+</style>
+
+<div class="container py-4 urgent-bg">
+    <!-- Blinking alert header -->
+    <div class="alert alert-danger text-center py-4 urgent-alert-bar">
+        ⚠️ YOU ARE AN ALCOHOLIC! COUNT YOUR DAYS! ⚠️
+    </div>
+
+    <!-- Grim Reaper image -->
+    <div class="text-center my-4">
+        <img src="~/img/reaper.png"
+             alt="Grim Reaper"
+             class="grim-reaper-img" />
+    </div>
+
+    <!-- Pulsing risk card -->
+    <div class="card mb-4 shadow-lg urgent-risk-card">
+        <div class="card-body text-center">
+            <h1 class="urgent-risk-text">
+                Risk Level: @Model.RiskBand
+            </h1>
+
+            <p class="fw-bold" style="font-size:1.5rem;">
+                Estimated Risk:
+                <span class="text-danger" style="font-size:2rem;">
+                    @Model.Confidence.ToString("P0")
+                </span>
+            </p>
+
+            <p class="text-muted small mt-2">
+                This is a machine-learning generated indicator only and is <strong>not</strong> a diagnosis.
+            </p>
         </div>
     </div>
+
+    @if (Model.Suggestions != null && Model.Suggestions.Any())
+    {
+        <div class="card mb-4 shadow urgent-reco-card">
+            <div class="card-body">
+                <h3 class="text-danger fw-bold mb-3">
+                    🔴 Critical Recommendations
+                </h3>
+
+                <ul class="urgent-suggestion-list" style="font-size:1.3rem; font-weight:600;">
+                    @foreach (var s in Model.Suggestions)
+                    {
+                        <li class="mb-2">@s</li>
+                    }
+                </ul>
+
+                <p class="text-muted small mt-3">
+                    These recommendations are based on patterns in a synthetic dataset and are not medical advice.
+                    For personal guidance or concerns, consult a qualified health professional.
+                </p>
+            </div>
+        </div>
+    }
+
+    <!-- Big buttons -->
+    <div class="mt-5 d-flex justify-content-center gap-4">
+        <a asp-action="Create"
+           class="btn btn-danger btn-lg fw-bold px-4 py-2 urgent-btn-main"
+           style="font-size:1.2rem;">
+            Re-Evaluate Metrics
+        </a>
+
+        <a asp-controller="Home"
+           asp-action="Index"
+           class="btn btn-secondary btn-lg fw-bold px-4 py-2 urgent-btn-secondary"
+           style="font-size:1.2rem;">
+            Return Home
+        </a>
+    </div>
 </div>
+
+}
+else
+{
+    <!-- 😌 Calm, normal-looking version -->
+    <div class="container py-4">
+        <h2>Your Health Prediction</h2>
+
+        <div class="card mb-3">
+            <div class="card-body">
+                <h3>Risk Level: @Model.RiskBand</h3>
+                <p>Estimated Risk: @Model.Confidence.ToString("P0")</p>
+            </div>
+        </div>
+
+        @if (Model.Suggestions != null && Model.Suggestions.Any())
+        {
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h4>Suggestions for Improvement</h4>
+                    <ul>
+                        @foreach (var s in Model.Suggestions)
+                        {
+                            <li>@s</li>
+                        }
+                    </ul>
+                    <p class="text-muted small">
+                        Suggestions generated by the model.  
+                        This is not medical advice.
+                    </p>
+                </div>
+            </div>
+        }
+
+        <div class="mt-4 d-flex gap-3">
+            <a asp-action="Create" class="btn btn-primary">Enter Another Set of Metrics</a>
+            <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Return Home</a>
+        </div>
+    </div>
+}
